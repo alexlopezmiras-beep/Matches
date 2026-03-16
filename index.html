@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>InmoMatch — Tu CRM Inmobiliario</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFBF7;
+    --charcoal: #1C1C1E;
+    --dark: #2D2D2D;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --terracotta: #C4623A;
+    --sage: #7A9E7E;
+    --muted: #888580;
+    --border: #E0D9CE;
+    --card-bg: #FFFFFF;
+    --shadow: 0 4px 24px rgba(28,28,30,0.08);
+    --shadow-lg: 0 12px 48px rgba(28,28,30,0.14);
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–cream);
+color: var(–charcoal);
+min-height: 100vh;
+-webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+header {
+background: var(–charcoal);
+color: var(–cream);
+padding: 18px 20px 14px;
+position: sticky;
+top: 0;
+z-index: 100;
+display: flex;
+align-items: center;
+gap: 10px;
+box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.logo-mark {
+width: 36px; height: 36px;
+background: var(–gold);
+border-radius: 8px;
+display: flex; align-items: center; justify-content: center;
+font-family: ‘Playfair Display’, serif;
+font-weight: 900;
+font-size: 18px;
+color: var(–charcoal);
+flex-shrink: 0;
+}
+.logo-text {
+font-family: ‘Playfair Display’, serif;
+font-size: 22px;
+font-weight: 700;
+letter-spacing: -0.3px;
+}
+.logo-text span { color: var(–gold-light); }
+
+/* ── TABS ── */
+.tabs {
+display: flex;
+background: var(–charcoal);
+padding: 0 16px 16px;
+gap: 8px;
+}
+.tab-btn {
+flex: 1;
+padding: 10px 8px;
+border: none;
+border-radius: 10px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+background: rgba(255,255,255,0.08);
+color: rgba(255,255,255,0.55);
+letter-spacing: 0.2px;
+}
+.tab-btn.active {
+background: var(–gold);
+color: var(–charcoal);
+}
+.tab-btn .tab-icon { display: block; font-size: 18px; margin-bottom: 2px; }
+
+/* ── SECTIONS ── */
+.section { display: none; padding: 20px 16px 100px; }
+.section.active { display: block; }
+
+/* ── SECTION TITLE ── */
+.section-header {
+margin-bottom: 20px;
+}
+.section-header h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: 26px;
+font-weight: 700;
+color: var(–charcoal);
+line-height: 1.2;
+}
+.section-header p {
+font-size: 14px;
+color: var(–muted);
+margin-top: 4px;
+}
+
+/* ── FORM CARD ── */
+.form-card {
+background: var(–card-bg);
+border-radius: 18px;
+padding: 20px;
+box-shadow: var(–shadow);
+margin-bottom: 20px;
+border: 1px solid var(–border);
+}
+.form-card h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 17px;
+font-weight: 700;
+margin-bottom: 16px;
+color: var(–charcoal);
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.form-card h3 .badge {
+background: var(–gold);
+color: var(–charcoal);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 10px;
+font-weight: 700;
+padding: 2px 8px;
+border-radius: 20px;
+letter-spacing: 0.5px;
+}
+
+label {
+display: block;
+font-size: 12px;
+font-weight: 600;
+color: var(–muted);
+letter-spacing: 0.5px;
+text-transform: uppercase;
+margin-bottom: 5px;
+margin-top: 14px;
+}
+label:first-of-type { margin-top: 0; }
+
+input[type=text], input[type=number], input[type=tel], select, textarea {
+width: 100%;
+padding: 12px 14px;
+border: 1.5px solid var(–border);
+border-radius: 10px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 15px;
+color: var(–charcoal);
+background: var(–warm-white);
+transition: border-color 0.2s;
+-webkit-appearance: none;
+appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+outline: none;
+border-color: var(–gold);
+background: #fff;
+}
+textarea { resize: vertical; min-height: 72px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.btn-primary {
+width: 100%;
+padding: 15px;
+background: var(–charcoal);
+color: var(–cream);
+border: none;
+border-radius: 12px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 15px;
+font-weight: 600;
+cursor: pointer;
+margin-top: 18px;
+letter-spacing: 0.2px;
+transition: background 0.2s, transform 0.1s;
+position: relative;
+overflow: hidden;
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary.gold { background: var(–gold); color: var(–charcoal); }
+.btn-primary:hover { background: #333; }
+.btn-primary.gold:hover { background: var(–gold-light); }
+
+/* ── ITEM CARDS ── */
+.items-list { display: flex; flex-direction: column; gap: 12px; }
+
+.item-card {
+background: var(–card-bg);
+border-radius: 16px;
+padding: 16px;
+box-shadow: var(–shadow);
+border: 1px solid var(–border);
+position: relative;
+animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+from { opacity: 0; transform: translateY(12px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.item-card-header {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+gap: 8px;
+}
+.item-name {
+font-family: ‘Playfair Display’, serif;
+font-size: 17px;
+font-weight: 700;
+color: var(–charcoal);
+}
+.item-subtitle {
+font-size: 13px;
+color: var(–muted);
+margin-top: 2px;
+}
+.tag-list {
+display: flex;
+flex-wrap: wrap;
+gap: 6px;
+margin-top: 10px;
+}
+.tag {
+background: var(–cream);
+border: 1px solid var(–border);
+color: var(–dark);
+font-size: 12px;
+font-weight: 500;
+padding: 4px 10px;
+border-radius: 20px;
+}
+.tag.gold { background: #FEF3D0; border-color: var(–gold); color: #8B6914; }
+.tag.sage { background: #E8F0E9; border-color: var(–sage); color: #3D6B42; }
+.tag.terra { background: #FAEAE4; border-color: var(–terracotta); color: var(–terracotta); }
+
+.delete-btn {
+background: none;
+border: none;
+color: var(–muted);
+font-size: 20px;
+cursor: pointer;
+padding: 0 2px;
+line-height: 1;
+flex-shrink: 0;
+}
+.delete-btn:active { color: var(–terracotta); }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+text-align: center;
+padding: 40px 20px;
+color: var(–muted);
+}
+.empty-state .empty-icon { font-size: 44px; margin-bottom: 10px; }
+.empty-state p { font-size: 14px; line-height: 1.5; }
+
+/* ── MATCHES ── */
+.match-card {
+background: var(–card-bg);
+border-radius: 18px;
+padding: 18px;
+box-shadow: var(–shadow-lg);
+border: 1px solid var(–border);
+margin-bottom: 14px;
+animation: slideIn 0.3s ease;
+}
+.match-score-bar {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 14px;
+}
+.score-circle {
+width: 52px; height: 52px;
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-weight: 700;
+font-size: 16px;
+flex-shrink: 0;
+}
+.score-high { background: #E8F0E9; color: #2E7D32; border: 2px solid var(–sage); }
+.score-mid  { background: #FEF3D0; color: #8B6914; border: 2px solid var(–gold); }
+.score-low  { background: #FAEAE4; color: #C4623A; border: 2px solid var(–terracotta); }
+
+.match-names { flex: 1; }
+.match-names .match-client { font-weight: 700; font-size: 16px; }
+.match-names .match-prop { font-size: 13px; color: var(–muted); margin-top: 1px; }
+
+.match-reasons {
+display: flex;
+flex-direction: column;
+gap: 5px;
+margin-top: 10px;
+padding-top: 12px;
+border-top: 1px solid var(–border);
+}
+.match-reason {
+font-size: 13px;
+display: flex;
+align-items: center;
+gap: 6px;
+color: var(–dark);
+}
+.match-reason .dot {
+width: 6px; height: 6px;
+border-radius: 50%;
+background: var(–gold);
+flex-shrink: 0;
+}
+
+.filter-row {
+display: flex;
+gap: 8px;
+margin-bottom: 16px;
+overflow-x: auto;
+padding-bottom: 4px;
+-webkit-overflow-scrolling: touch;
+}
+.filter-chip {
+white-space: nowrap;
+padding: 8px 14px;
+border-radius: 20px;
+border: 1.5px solid var(–border);
+background: var(–card-bg);
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.15s;
+color: var(–dark);
+}
+.filter-chip.active {
+background: var(–charcoal);
+border-color: var(–charcoal);
+color: #fff;
+}
+
+.count-badge {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+background: var(–gold);
+color: var(–charcoal);
+font-size: 11px;
+font-weight: 700;
+width: 20px; height: 20px;
+border-radius: 50%;
+margin-left: 4px;
+}
+
+/* ── STATS ── */
+.stats-row {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 10px;
+margin-bottom: 20px;
+}
+.stat-box {
+background: var(–card-bg);
+border-radius: 14px;
+padding: 14px 10px;
+text-align: center;
+box-shadow: var(–shadow);
+border: 1px solid var(–border);
+}
+.stat-num {
+font-family: ‘Playfair Display’, serif;
+font-size: 28px;
+font-weight: 900;
+color: var(–charcoal);
+line-height: 1;
+}
+.stat-label { font-size: 11px; color: var(–muted); margin-top: 4px; font-weight: 500; }
+
+/* Notif toast */
+.toast {
+position: fixed;
+bottom: 90px; left: 50%;
+transform: translateX(-50%) translateY(20px);
+background: var(–charcoal);
+color: var(–cream);
+padding: 12px 20px;
+border-radius: 12px;
+font-size: 14px;
+font-weight: 500;
+opacity: 0;
+transition: all 0.3s;
+z-index: 999;
+white-space: nowrap;
+box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.toast.show {
+opacity: 1;
+transform: translateX(-50%) translateY(0);
+}
+
+.section-divider {
+text-align: center;
+font-size: 11px;
+color: var(–muted);
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+margin: 20px 0 14px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.section-divider::before, .section-divider::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–border);
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">I</div>
+  <div class="logo-text">Inmo<span>Match</span></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" onclick="showTab('clientes')">
+    <span class="tab-icon">👥</span> Clientes
+  </button>
+  <button class="tab-btn" onclick="showTab('viviendas')">
+    <span class="tab-icon">🏠</span> Viviendas
+  </button>
+  <button class="tab-btn" onclick="showTab('matches')">
+    <span class="tab-icon">✨</span> Matches
+  </button>
+</nav>
+
+<!-- ════════════════ CLIENTES ════════════════ -->
+
+<section id="tab-clientes" class="section active">
+  <div class="section-header">
+    <h2>Clientes</h2>
+    <p>Añade clientes y lo que buscan</p>
+  </div>
+
+  <div class="form-card">
+    <h3>➕ Nuevo cliente <span class="badge">NUEVO</span></h3>
+
+```
+<label>Nombre completo</label>
+<input type="text" id="c-nombre" placeholder="Ej: Carlos Rodríguez">
+
+<label>Teléfono (opcional)</label>
+<input type="tel" id="c-tel" placeholder="Ej: 600 000 000">
+
+<label>Tipo de propiedad que busca</label>
+<select id="c-tipo">
+  <option value="">Seleccionar...</option>
+  <option>Piso</option>
+  <option>Casa</option>
+  <option>Chalet</option>
+  <option>Ático</option>
+  <option>Bajo con jardín</option>
+  <option>Local</option>
+  <option>Indiferente</option>
+</select>
+
+<label>Zona / Barrio preferido</label>
+<input type="text" id="c-zona" placeholder="Ej: Centro, Retiro, Playa...">
+
+<div class="row-2">
+  <div>
+    <label>Hab. mínimas</label>
+    <input type="number" id="c-hab-min" min="0" max="10" placeholder="1">
+  </div>
+  <div>
+    <label>Hab. máximas</label>
+    <input type="number" id="c-hab-max" min="0" max="10" placeholder="4">
+  </div>
+</div>
+
+<div class="row-2">
+  <div>
+    <label>Precio mín (€)</label>
+    <input type="number" id="c-precio-min" placeholder="50000">
+  </div>
+  <div>
+    <label>Precio máx (€)</label>
+    <input type="number" id="c-precio-max" placeholder="300000">
+  </div>
+</div>
+
+<label>Extras deseados</label>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:2px;" id="extras-clientes">
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Garaje" style="width:16px;height:16px;"> Garaje
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Piscina" style="width:16px;height:16px;"> Piscina
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Terraza" style="width:16px;height:16px;"> Terraza
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Ascensor" style="width:16px;height:16px;"> Ascensor
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Trastero" style="width:16px;height:16px;"> Trastero
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Jardín" style="width:16px;height:16px;"> Jardín
+  </label>
+</div>
+
+<label>Notas adicionales</label>
+<textarea id="c-notas" placeholder="Necesidades especiales, urgencia..."></textarea>
+
+<button class="btn-primary gold" onclick="addCliente()">Guardar cliente</button>
+```
+
+  </div>
+
+  <div class="section-divider">Clientes guardados</div>
+  <div id="lista-clientes">
+    <div class="empty-state">
+      <div class="empty-icon">👤</div>
+      <p>Aún no tienes clientes.<br>Añade el primero arriba.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ VIVIENDAS ════════════════ -->
+
+<section id="tab-viviendas" class="section">
+  <div class="section-header">
+    <h2>Viviendas</h2>
+    <p>Añade las propiedades en venta</p>
+  </div>
+
+  <div class="form-card">
+    <h3>➕ Nueva vivienda <span class="badge">NUEVO</span></h3>
+
+```
+<label>Referencia / Nombre</label>
+<input type="text" id="v-ref" placeholder="Ej: Piso Goya 3D o Ref. A-204">
+
+<label>Tipo de propiedad</label>
+<select id="v-tipo">
+  <option value="">Seleccionar...</option>
+  <option>Piso</option>
+  <option>Casa</option>
+  <option>Chalet</option>
+  <option>Ático</option>
+  <option>Bajo con jardín</option>
+  <option>Local</option>
+</select>
+
+<label>Zona / Barrio</label>
+<input type="text" id="v-zona" placeholder="Ej: Centro, Retiro, Playa...">
+
+<div class="row-2">
+  <div>
+    <label>Habitaciones</label>
+    <input type="number" id="v-hab" min="0" max="20" placeholder="3">
+  </div>
+  <div>
+    <label>Precio (€)</label>
+    <input type="number" id="v-precio" placeholder="180000">
+  </div>
+</div>
+
+<div class="row-2">
+  <div>
+    <label>m²</label>
+    <input type="number" id="v-metros" placeholder="90">
+  </div>
+  <div>
+    <label>Planta</label>
+    <input type="text" id="v-planta" placeholder="Ej: 3ª, Baja...">
+  </div>
+</div>
+
+<label>Extras disponibles</label>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:2px;">
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Garaje" style="width:16px;height:16px;"> Garaje
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Piscina" style="width:16px;height:16px;"> Piscina
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Terraza" style="width:16px;height:16px;"> Terraza
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Ascensor" style="width:16px;height:16px;"> Ascensor
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Trastero" style="width:16px;height:16px;"> Trastero
+  </label>
+  <label style="all:unset;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--dark);margin-top:0;text-transform:none;letter-spacing:0;">
+    <input type="checkbox" value="Jardín" style="width:16px;height:16px;"> Jardín
+  </label>
+</div>
+
+<label>Descripción</label>
+<textarea id="v-desc" placeholder="Características destacadas, estado, orientación..."></textarea>
+
+<button class="btn-primary gold" onclick="addVivienda()">Guardar vivienda</button>
+```
+
+  </div>
+
+  <div class="section-divider">Viviendas guardadas</div>
+  <div id="lista-viviendas">
+    <div class="empty-state">
+      <div class="empty-icon">🏠</div>
+      <p>Aún no tienes viviendas.<br>Añade la primera arriba.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ MATCHES ════════════════ -->
+
+<section id="tab-matches" class="section">
+  <div class="section-header">
+    <h2>✨ Matches</h2>
+    <p>Clientes y viviendas compatibles</p>
+  </div>
+
+  <div class="stats-row" id="stats-row">
+    <div class="stat-box">
+      <div class="stat-num" id="stat-clientes">0</div>
+      <div class="stat-label">Clientes</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-viviendas">0</div>
+      <div class="stat-label">Viviendas</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-matches">0</div>
+      <div class="stat-label">Matches</div>
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-chip active" onclick="filterMatches('todos',this)">Todos</button>
+    <button class="filter-chip" onclick="filterMatches('alto',this)">🟢 Alta</button>
+    <button class="filter-chip" onclick="filterMatches('medio',this)">🟡 Media</button>
+    <button class="filter-chip" onclick="filterMatches('bajo',this)">🟠 Baja</button>
+  </div>
+
+  <div id="lista-matches">
+    <div class="empty-state">
+      <div class="empty-icon">✨</div>
+      <p>Añade clientes y viviendas<br>para ver los matches aquí.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Toast -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+let clientes = JSON.parse(localStorage.getItem('inmo_clientes') || '[]');
+let viviendas = JSON.parse(localStorage.getItem('inmo_viviendas') || '[]');
+
+function save() {
+  localStorage.setItem('inmo_clientes', JSON.stringify(clientes));
+  localStorage.setItem('inmo_viviendas', JSON.stringify(viviendas));
+}
+
+// ─── TABS ────────────────────────────────────────────────
+function showTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (tab === 'matches') renderMatches();
+  if (tab === 'clientes') renderClientes();
+  if (tab === 'viviendas') renderViviendas();
+  updateStats();
+}
+
+// ─── TOAST ───────────────────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ─── EXTRAS ──────────────────────────────────────────────
+function getChecked(container) {
+  return [...container.querySelectorAll('input[type=checkbox]:checked')].map(c => c.value);
+}
+
+// ─── ADD CLIENTE ─────────────────────────────────────────
+function addCliente() {
+  const nombre = document.getElementById('c-nombre').value.trim();
+  if (!nombre) { toast('⚠️ Escribe el nombre del cliente'); return; }
+
+  const cliente = {
+    id: Date.now(),
+    nombre,
+    tel: document.getElementById('c-tel').value.trim(),
+    tipo: document.getElementById('c-tipo').value,
+    zona: document.getElementById('c-zona').value.trim(),
+    habMin: parseInt(document.getElementById('c-hab-min').value) || 0,
+    habMax: parseInt(document.getElementById('c-hab-max').value) || 99,
+    precioMin: parseInt(document.getElementById('c-precio-min').value) || 0,
+    precioMax: parseInt(document.getElementById('c-precio-max').value) || 999999999,
+    extras: getChecked(document.getElementById('extras-clientes')),
+    notas: document.getElementById('c-notas').value.trim(),
+  };
+
+  clientes.push(cliente);
+  save();
+  renderClientes();
+  updateStats();
+  toast('✅ Cliente guardado');
+
+  // reset
+  ['c-nombre','c-tel','c-zona','c-hab-min','c-hab-max','c-precio-min','c-precio-max','c-notas'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('c-tipo').value = '';
+  document.querySelectorAll('#extras-clientes input[type=checkbox]').forEach(c => c.checked = false);
+}
+
+// ─── ADD VIVIENDA ────────────────────────────────────────
+function addVivienda() {
+  const ref = document.getElementById('v-ref').value.trim();
+  if (!ref) { toast('⚠️ Escribe la referencia'); return; }
+
+  const viv = {
+    id: Date.now(),
+    ref,
+    tipo: document.getElementById('v-tipo').value,
+    zona: document.getElementById('v-zona').value.trim(),
+    hab: parseInt(document.getElementById('v-hab').value) || 0,
+    precio: parseInt(document.getElementById('v-precio').value) || 0,
+    metros: parseInt(document.getElementById('v-metros').value) || 0,
+    planta: document.getElementById('v-planta').value.trim(),
+    extras: getChecked(document.querySelector('#tab-viviendas .form-card')),
+    desc: document.getElementById('v-desc').value.trim(),
+  };
+
+  viviendas.push(viv);
+  save();
+  renderViviendas();
+  updateStats();
+  toast('✅ Vivienda guardada');
+
+  ['v-ref','v-zona','v-hab','v-precio','v-metros','v-planta','v-desc'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('v-tipo').value = '';
+  document.querySelectorAll('#tab-viviendas .form-card input[type=checkbox]').forEach(c => c.checked = false);
+}
+
+// ─── RENDER CLIENTES ─────────────────────────────────────
+function renderClientes() {
+  const el = document.getElementById('lista-clientes');
+  if (!clientes.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">👤</div><p>Aún no tienes clientes.<br>Añade el primero arriba.</p></div>`;
+    return;
+  }
+  el.innerHTML = '<div class="items-list">' + clientes.map(c => `
+    <div class="item-card">
+      <div class="item-card-header">
+        <div>
+          <div class="item-name">${c.nombre}</div>
+          <div class="item-subtitle">${c.tel ? '📞 '+c.tel : ''}</div>
+        </div>
+        <button class="delete-btn" onclick="deleteCliente(${c.id})">×</button>
+      </div>
+      <div class="tag-list">
+        ${c.tipo ? `<span class="tag gold">${c.tipo}</span>` : ''}
+        ${c.zona ? `<span class="tag sage">📍 ${c.zona}</span>` : ''}
+        ${c.habMin||c.habMax<99 ? `<span class="tag">🛏 ${c.habMin}–${c.habMax===99?'+':(c.habMax)} hab</span>` : ''}
+        ${c.precioMax<999999999 ? `<span class="tag">💰 ${fmtP(c.precioMin)}–${fmtP(c.precioMax)}</span>` : ''}
+        ${c.extras.map(e=>`<span class="tag terra">${e}</span>`).join('')}
+      </div>
+      ${c.notas ? `<p style="font-size:13px;color:var(--muted);margin-top:8px;">📝 ${c.notas}</p>` : ''}
+    </div>
+  `).join('') + '</div>';
+}
+
+// ─── RENDER VIVIENDAS ────────────────────────────────────
+function renderViviendas() {
+  const el = document.getElementById('lista-viviendas');
+  if (!viviendas.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">🏠</div><p>Aún no tienes viviendas.<br>Añade la primera arriba.</p></div>`;
+    return;
+  }
+  el.innerHTML = '<div class="items-list">' + viviendas.map(v => `
+    <div class="item-card">
+      <div class="item-card-header">
+        <div>
+          <div class="item-name">${v.ref}</div>
+          <div class="item-subtitle">${v.zona ? '📍 '+v.zona : ''} ${v.planta ? '· '+v.planta+' planta' : ''}</div>
+        </div>
+        <button class="delete-btn" onclick="deleteVivienda(${v.id})">×</button>
+      </div>
+      <div class="tag-list">
+        ${v.tipo ? `<span class="tag gold">${v.tipo}</span>` : ''}
+        ${v.hab ? `<span class="tag">🛏 ${v.hab} hab</span>` : ''}
+        ${v.metros ? `<span class="tag">📐 ${v.metros} m²</span>` : ''}
+        ${v.precio ? `<span class="tag sage">💰 ${fmtP(v.precio)}</span>` : ''}
+        ${v.extras.map(e=>`<span class="tag terra">${e}</span>`).join('')}
+      </div>
+      ${v.desc ? `<p style="font-size:13px;color:var(--muted);margin-top:8px;">📝 ${v.desc}</p>` : ''}
+    </div>
+  `).join('') + '</div>';
+}
+
+// ─── DELETE ──────────────────────────────────────────────
+function deleteCliente(id) {
+  if (!confirm('¿Eliminar este cliente?')) return;
+  clientes = clientes.filter(c => c.id !== id);
+  save(); renderClientes(); updateStats(); toast('🗑 Cliente eliminado');
+}
+function deleteVivienda(id) {
+  if (!confirm('¿Eliminar esta vivienda?')) return;
+  viviendas = viviendas.filter(v => v.id !== id);
+  save(); renderViviendas(); updateStats(); toast('🗑 Vivienda eliminada');
+}
+
+// ─── MATCHING ALGORITHM ──────────────────────────────────
+function calcMatch(c, v) {
+  let score = 0;
+  const reasons = [];
+  const total = 6;
+
+  // Tipo
+  if (c.tipo && v.tipo) {
+    if (c.tipo === v.tipo || c.tipo === 'Indiferente') {
+      score++;
+      reasons.push(`Tipo coincide: ${v.tipo}`);
+    }
+  } else { score += 0.5; }
+
+  // Zona
+  if (c.zona && v.zona) {
+    const cz = c.zona.toLowerCase(), vz = v.zona.toLowerCase();
+    if (vz.includes(cz) || cz.includes(vz)) {
+      score += 1.5;
+      reasons.push(`Zona coincide: ${v.zona}`);
+    }
+  } else { score += 0.5; }
+
+  // Habitaciones
+  if (v.hab >= c.habMin && v.hab <= c.habMax) {
+    score++;
+    reasons.push(`${v.hab} habitaciones dentro del rango buscado`);
+  }
+
+  // Precio
+  if (v.precio >= c.precioMin && v.precio <= c.precioMax) {
+    score += 1.5;
+    reasons.push(`Precio ${fmtP(v.precio)} dentro del presupuesto`);
+  } else if (v.precio > 0 && c.precioMax < 999999999) {
+    const diff = Math.abs(v.precio - c.precioMax) / c.precioMax;
+    if (diff < 0.15) { score += 0.5; reasons.push(`Precio ligeramente fuera de rango (${fmtP(v.precio)})`); }
+  }
+
+  // Extras
+  if (c.extras.length > 0) {
+    const coinciden = c.extras.filter(e => v.extras.includes(e));
+    const pct = coinciden.length / c.extras.length;
+    score += pct;
+    if (coinciden.length > 0) reasons.push(`Extras: ${coinciden.join(', ')}`);
+  }
+
+  const pct = Math.round((score / total) * 100);
+  return { score: pct, reasons };
+}
+
+let currentFilter = 'todos';
+let allMatches = [];
+
+function renderMatches() {
+  if (!clientes.length || !viviendas.length) {
+    document.getElementById('lista-matches').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">✨</div>
+        <p>Añade clientes y viviendas<br>para ver los matches aquí.</p>
+      </div>`;
+    updateStats();
+    return;
+  }
+
+  allMatches = [];
+  for (const c of clientes) {
+    for (const v of viviendas) {
+      const m = calcMatch(c, v);
+      if (m.score >= 20) {
+        allMatches.push({ c, v, score: m.score, reasons: m.reasons });
+      }
+    }
+  }
+  allMatches.sort((a, b) => b.score - a.score);
+  updateStats();
+  renderFilteredMatches();
+}
+
+function filterMatches(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  renderFilteredMatches();
+}
+
+function renderFilteredMatches() {
+  let filtered = allMatches;
+  if (currentFilter === 'alto')  filtered = allMatches.filter(m => m.score >= 70);
+  if (currentFilter === 'medio') filtered = allMatches.filter(m => m.score >= 40 && m.score < 70);
+  if (currentFilter === 'bajo')  filtered = allMatches.filter(m => m.score < 40);
+
+  const el = document.getElementById('lista-matches');
+  if (!filtered.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>No hay matches en esta categoría.</p></div>`;
+    return;
+  }
+
+  el.innerHTML = filtered.map(m => {
+    const cls = m.score >= 70 ? 'score-high' : m.score >= 40 ? 'score-mid' : 'score-low';
+    return `
+    <div class="match-card">
+      <div class="match-score-bar">
+        <div class="score-circle ${cls}">${m.score}%</div>
+        <div class="match-names">
+          <div class="match-client">👤 ${m.c.nombre}</div>
+          <div class="match-prop">🏠 ${m.v.ref}</div>
+        </div>
+      </div>
+      <div class="match-reasons">
+        ${m.reasons.map(r => `<div class="match-reason"><span class="dot"></span>${r}</div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── STATS ───────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('stat-clientes').textContent = clientes.length;
+  document.getElementById('stat-viviendas').textContent = viviendas.length;
+  document.getElementById('stat-matches').textContent = allMatches.filter(m => m.score >= 40).length;
+}
+
+// ─── FORMAT ──────────────────────────────────────────────
+function fmtP(n) {
+  if (!n || n === 0) return '—';
+  if (n >= 1000000) return (n/1000000).toFixed(1)+'M€';
+  if (n >= 1000) return Math.round(n/1000)+'k€';
+  return n+'€';
+}
+
+// ─── INIT ────────────────────────────────────────────────
+renderClientes();
+renderViviendas();
+updateStats();
+</script>
+
+</body>
+</html>
